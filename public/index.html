@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Anti-Vírus</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div class="background-container">
+        <form id="searchForm">
+            <h1 class="app-title">ANTI-VÍRUS</h1>
+            <h2 class="app-title2">PARA .EXE E .BAT</h2>
+            <h2 class="description">Uma breve descrição do que é este app, é um app que você pode filtrar arquivos .exe e .bat, se caso você tenha uma basta com muitos aplicativos e queira encontrar esses em específico, pode usar nosso app, basta apenas colocar o diretório da pasta que deseja,e VUALA, você terá todos os arquivos .exe e .bat em sua ordem, e se não tiver nenhum, não ira aparecer nada. Caso não tenha entendido, tem um passo a passo logo abaixo. Aproveite!</h2>
+            <div class="input-container">
+                <input type="text" id="directoryPath" placeholder="Digite o caminho do diretório">
+                <div id="directoryBar"></div>
+            </div>
+            <button type="submit">Buscar</button>
+        </form>
+    
+        <section id="resultSection">
+            <h1>Resultados da Busca</h1>
+            <div id="result"></div>
+        </section>
+    </div>
+
+    <div class="instructions">
+        <h1 class="passoapasso">Passo a Passo</h1>
+        <form class="primeiro">
+            <h1 class="pass-1">Passo 1: Onde encontrar?</h1>
+            <h2 class="pass-description">Entre na pasta onde estão os seus documentos que deseja filtrar.</h2>
+            <div class="pass-img">
+                <img src="imagens/passo 1.png" alt="Passo 1">
+            </div>
+            <h1 class="pass-2">Passo 2: Como identificar o diretório?</h1>
+            <h2 class="pass-description">Clique no nome da pasta, e assim você terá o diretório(caminho), da pasta.</h2>
+            <div class="pass-img">
+                <img src="./imagens/passo 2.png" alt="Passo 2">
+            </div>
+            <h1 class="pass-3">Onde inserir o diretório?</h1>
+            <h2 class="pass-description">Cole o diretório na barra de busca e confira se há arquivos .exe ou .bat.</h2>
+            <div class="pass-img">
+                <img src="./imagens/passo 3.png" alt="Passo 3">
+            </div>
+        </form>      
+    </div>
+
+    <script>
+     document.getElementById("searchForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+    const directoryPath = document.getElementById("directoryPath").value;
+
+    fetch(`/search?path=${directoryPath}`)
+        .then(response => response.json())
+        .then(data => {
+            showFiles(data);
+            document.getElementById("resultSection").style.display = "block"; // Exibe a seção de resultados
+        })
+        .catch(error => console.error('Erro:', error));
+});
+        function toggleSections() {
+            document.getElementById("resultSection").style.display = "block";
+        }
+
+        function showFiles(files) {
+            const resultDiv = document.getElementById("result");
+            resultDiv.innerHTML = "";
+
+            files.forEach(file => {
+                const p = document.createElement("p");
+                p.textContent = file;
+                p.addEventListener('click', () => {
+                    // Lógica para exibir detalhes do arquivo clicado
+                    displayFileDetails(file);
+                });
+                resultDiv.appendChild(p);
+            });
+        }
+
+        function displayFileDetails(filename) {
+            alert(`Detalhes do arquivo: ${filename}`);
+        }
+    </script>
+</body>
+</html>
