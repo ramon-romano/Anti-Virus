@@ -38,7 +38,7 @@ node server.js
 ```
 # Video de Explicação
 <video width="640" height="360" controls>
-  <source src="./video/VIDEO.wmv" type="video/x-ms-wmv">
+  <source src="./video/VIDEO (1).mp4" type="video">
   Seu navegador não suporta o formato de vídeo.
 </video>
 
